@@ -1,0 +1,27 @@
+name: Post JSON File to Two URLs
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  post_json:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Send JSON Data to First URL
+        run: |
+          set -euo pipefail
+          curl --fail-with-body -X POST "https://:waSkr2APSj-UOv7ezjD4Cg@tandem.autodesk.com/api/v1/timeseries/models/urn:adsk.dtm:nJH85NjvTGGcGaJ6R3tyVg/streams/AQAAAAhMwkjcdUPiu-T8R5T7QVMAAAAA" \
+            -H "Content-Type: application/json" \
+            --data-binary @stream.json
+
+      - name: Send JSON Data to Second URL
+        run: |
+          set -euo pipefail
+          curl --fail-with-body -X POST "PASTE_URL_2_HERE" \
+            -H "Content-Type: application/json" \
+            --data-binary @stream.json
