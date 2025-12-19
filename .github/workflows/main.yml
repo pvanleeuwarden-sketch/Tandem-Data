@@ -1,39 +1,22 @@
-name: Post JSON File to Two Tandem Streams
-
+name: Post JSON File to Two URLs
 on:
-  workflow_dispatch:
-  push:
-    branches: [ "main" ]
-
+push:
+branches:
+- main # Runs only when pushing to the main branch
+workflow_dispatch: # Allows manual trigger
 jobs:
-  post_json:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Debug – check stream.json
-        run: |
-          echo "Current directory:"
-          pwd
-          echo "Files:"
-          ls -la
-          echo "Contents of stream.json:"
-          cat stream.json
-
-      - name: Post to Tandem Stream 1
-        run: |
-          curl --fail-with-body -X POST \
-            "https://tandem.autodesk.com/api/v1/timeseries/models/urn:adsk.dtm:nJH85NjvTGGcGaJ6R3tyVg/streams/AQAAAAVsqX42Kki0p6md8TCWHtcAAAAA" \
-            -H "Content-Type: application/json" \
-            -H "Authorization: Bearer ${{ secrets.TANDEM_TOKEN_1 }}" \
-            --data-binary @stream.json
-
-      - name: Post to Tandem Stream 2
-        run: |
-          curl --fail-with-body -X POST \
-            "https://tandem.autodesk.com/api/v1/timeseries/models/urn:adsk.dtm:nJH85NjvTGGcGaJ6R3tyVg/streams/AQAAAGIOnr0upUqDg42IKQQ1gp4AAAAA" \
-            -H "Content-Type: application/json" \
-            -H "Authorization: Bearer ${{ secrets.TANDEM_TOKEN_2 }}" \
-            --data-binary @stream.json
+post_json:
+runs-on: ubuntu-latest
+steps:
+- name: Checkout Repository
+uses: actions/checkout@v3
+- name: Send JSON Data to First URL
+run: |
+curl -X POST "https://:waSkr2APSj-UOv7ezjD4Cg@tandem.autodesk.com/api/v1/timeseries/models/urn:adsk.dtm:nJH85NjvTGGcGaJ6R3tyVg/streams/AQAAAAhMwkjcdUPiu-T8R5T7QVMAAAAA" \
+-H "Content-Type: application/json" \
+-d @stream.json
+- name: Send JSON Data to Second URL
+run: |
+curl -X POST "https://:uKY1jonlQzSQxqqbECXOjg@tandem.autodesk.com/api/v1/timeseries/models/urn:adsk.dtm:nJH85NjvTGGcGaJ6R3tyVg/streams/AQAAADt6KahyMEh_uA4wNwtPYOsAAAAA" \
+-H "Content-Type: application/json" \
+-d @stream.json
