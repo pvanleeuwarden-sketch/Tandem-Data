@@ -22,6 +22,6 @@ jobs:
       - name: Send JSON Data to Second URL
         run: |
           set -euo pipefail
-          curl --fail-with-body -X POST "PASTE_URL_2_HERE" \
+          curl --fail-with-body -X POST "https://:uKY1jonlQzSQxqqbECXOjg@tandem.autodesk.com/api/v1/timeseries/models/urn:adsk.dtm:nJH85NjvTGGcGaJ6R3tyVg/streams/AQAAADt6KahyMEh_uA4wNwtPYOsAAAAA" \
             -H "Content-Type: application/json" \
             --data-binary @stream.json
