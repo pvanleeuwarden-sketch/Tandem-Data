@@ -1,27 +1,20 @@
-name: Post JSON File to Two URLs
+name: Post Simple Values to Tandem
 
 on:
-  push:
-    branches: [ "main" ]
   workflow_dispatch:
 
 jobs:
-  post_json:
+  send_values:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-
-      - name: Send JSON Data to First URL
+      - name: Send Temperature (22.3)
         run: |
-          set -euo pipefail
-          curl --fail-with-body -X POST "https://:waSkr2APSj-UOv7ezjD4Cg@tandem.autodesk.com/api/v1/timeseries/models/urn:adsk.dtm:nJH85NjvTGGcGaJ6R3tyVg/streams/AQAAAAhMwkjcdUPiu-T8R5T7QVMAAAAA" \
+          curl -X POST "PASTE_TEMPERATURE_STREAM_URL_HERE" \
             -H "Content-Type: application/json" \
-            --data-binary '{"Temperature": 22.3}'
+            --data-raw '{"Temperature": 22.3}'
 
-      - name: Send JSON Data to Second URL
+      - name: Send Humidity (30)
         run: |
-          set -euo pipefail
-          curl --fail-with-body -X POST "https://:uKY1jonlQzSQxqqbECXOjg@tandem.autodesk.com/api/v1/timeseries/models/urn:adsk.dtm:nJH85NjvTGGcGaJ6R3tyVg/streams/AQAAADt6KahyMEh_uA4wNwtPYOsAAAAA" \
+          curl -X POST "PASTE_HUMIDITY_STREAM_URL_HERE" \
             -H "Content-Type: application/json" \
-            --data-binary'{"Humidity": 30.0}'
+            --data-raw '{"Humidity": 30}'
